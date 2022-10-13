@@ -1,0 +1,19 @@
+ErrorDocument 404 http://localhost/projectallocation/404
+ErrorDocument 500 http://localhost/projectallocation/500
+
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_URI} ^/404/$
+RewriteRule ^(.*)$ //localhost/projectallocation/404 [L]
+
+RewriteCond %{REQUEST_URI} ^/500/$
+RewriteRule ^(.*)$ //localhost/apdprojectallocationeets/500 [L]
+
+# Options +MultiViews
+
+# RewriteEngine On
+# RewriteBase /
+# RewriteRule ^(.+)\.php$ /$1 [R,L]
+# RewriteCond %{REQUEST_FILENAME}.php -f
+# RewriteRule ^(.*?)/?$ /$1.php [NC, END]
