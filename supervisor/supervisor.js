@@ -38,17 +38,17 @@ $('#save-sec').submit(()=>{
 });
 
 //save personal details
-$('#save-acct').submit(()=>{
+$('#sup-save-acct').submit(()=>{
     
-    let form_data = new FormData(document.getElementById('save-acct'));
+    let form_data = new FormData(document.getElementById('sup-save-acct'));
     
-    form_data.append('rType', 'sup-save-acct');
+    form_data.append('rType', 'supervisor-save-acct');
     $.ajax({
         url: '../util/ajax-request.php',
         type: 'POST',
         data: form_data,
         contentType: false,
-        cache: false,
+        cache: false, 
         processData: false,        
         success: (status)=>{
             if (status=='done') {

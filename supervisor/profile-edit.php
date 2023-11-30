@@ -55,7 +55,7 @@ require_once 'head.php';?>
                             <h2><strong>Account</strong> Settings</h2>
                         </div>
                         <div class="body">
-                            <form method="post" id="save-acct">
+                            <form method="post" id="sup-save-acct">
                             <div class="row clearfix">
                                 <div class="col-lg-4 col-md-12">
                                     <div class="form-group">
@@ -98,7 +98,7 @@ require_once 'head.php';?>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <textarea rows="4" name="addr" value="<?php echo $supervisor['address'] ?>" required class="form-control no-resize" placeholder="Address Line 1"></textarea>
+                                        <textarea rows="4" name="addr" class="form-control no-resize" placeholder="Address Line 1"><?php echo $supervisor['address'] ?></textarea>
                                     </div>
                                 </div>
                               

@@ -70,7 +70,7 @@ require_once 'head.php';?>
                                 </div>
                                 <div class="col-lg-4 col-md-12">
                                     <div class="form-group">
-                                        <input type="file" name="pic" required class="form-control" accept=".jpg, .png, .jpeg" placeholder="choose profile picture">
+                                        <input type="file" name="pic" class="form-control" accept=".jpg, .png, .jpeg" placeholder="choose profile picture">
                                     </div>
                                 </div>                                    
                                 <div class="col-lg-4 col-md-12">
@@ -98,7 +98,7 @@ require_once 'head.php';?>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <textarea rows="4" name="addr" value="<?php echo $student['address'] ?>" required class="form-control no-resize" placeholder="Address Line 1"></textarea>
+                                        <textarea rows="4" name="addr" class="form-control no-resize" placeholder="Address Line 1"><?php echo $student['address'] ?></textarea>
                                     </div>
                                 </div>
                               

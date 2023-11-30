@@ -82,7 +82,7 @@
                                 <tbody>
                                     <?php
                                     try{
-                                        $sql = "Select * from tickets where stud_id={$_SESSION['pa-student']};";
+                                        $sql = "Select * from tickets where stud_id='{$_SESSION['pa-student']}';";
                                         $query = getConn()->prepare($sql);
                                         $query->execute();
                                         $query->setFetchMode(PDO::FETCH_ASSOC);

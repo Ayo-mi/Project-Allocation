@@ -226,39 +226,33 @@ elseif ($_POST['rType']=='save-acct') {
     $dpt = $_POST['dept'];
     $id= $_POST['us-id'];
 
-    $abstPath = 'file:///C:/wamp64/www/projectallocation/';
-    $temp = explode(".", $_FILES["pic"]["name"]);
-    $newfilename = $id.'_'.round(microtime(true)).'.'.end($temp);
-    $destiFilePath = $abstPath.'student/uploads/'.$newfilename;
-    $pic = '//localhost/projectallocation/student/uploads/'.$newfilename;
-
-    if (!move_uploaded_file($_FILES['pic']['tmp_name'], $destiFilePath)) {
-        echo 'An error occured while trying to upload your picture. Try again';
-    } else {
-        try{
-        $sql = "UPDATE students set `first_name`=:fn, last_name=:ln, email=:em, dept=:dt,
-        address=:addr, img=:pic, state=:st, country=:co where `matric_number`=:id;";
-        $query = getConn()->prepare($sql);
-        $values = [
-            ':id' => $id,
-            ':fn' => $fn,
-            ':ln' => $ln,
-            ':em' => $em,
-            ':dt' => $dpt,
-            ':addr' => $addr,
-            ':pic' => $pic,
-            ':st' => $state,
-            ':co' => $cou          
-        ];
-        $query->execute($values);
-        echo 'done';
+    $folderName = '../uploads/student';
+    $micro = rand();
+    
+    $pic = "//localhost/projectallocation/uploads/student/{$micro}_".basename($_FILES['pic']["name"]);
+    prepareImage($micro, 'pic', $folderName);
+    try{
+    $sql = "UPDATE students set `first_name`=:fn, last_name=:ln, email=:em, dept=:dt,
+    address=:addr, img=:pic, state=:st, country=:co where `matric_number`=:id;";
+    $query = getConn()->prepare($sql);
+    $values = [
+        ':id' => $id,
+        ':fn' => $fn,
+        ':ln' => $ln,
+        ':em' => $em,
+        ':dt' => $dpt,
+        ':addr' => $addr,
+        ':pic' => $pic,
+        ':st' => $state,
+        ':co' => $cou          
+    ];
+    $query->execute($values);    
+    echo 'done';
         
     }
     catch(PDOException $e) {             
       echo "Error: ".$e->getMessage();
-    }    
-    }
-
+    }       
     
 }
 
@@ -324,6 +318,45 @@ elseif ($_POST['rType']=='sup-save-acct') {
         $query->execute($values);
         echo 'done';
         
+    }
+    catch(PDOException $e) {             
+      echo "Error: ".$e->getMessage();
+    }      
+}
+
+elseif ($_POST['rType']=='supervisor-save-acct') {
+    $fn= $_POST['fn'];
+    $ln= $_POST['ln'];
+    $em = $_POST['email'];
+    $state = $_POST['state'];
+    $cou = $_POST['country'];
+    $addr = $_POST['addr'];
+    $dpt = $_POST['dept'];
+    $id= $_POST['us-id'];
+
+    $folderName = '../uploads/supervisor';
+    $micro = rand();
+    
+    $pic = "//localhost/projectallocation/uploads/supervisor/{$micro}_".basename($_FILES['pic']["name"]);
+    prepareImage($micro, 'pic', $folderName);
+   
+        try{
+        $sql = "UPDATE supervisors set `first_name`=:fn, last_name=:ln, email=:em, dept=:dt,
+        address=:addr, state=:st, country=:co, img=:im where `user_id`=:id;";
+        $query = getConn()->prepare($sql);
+        $values = [
+            ':id' => $id,
+            ':fn' => $fn,
+            ':ln' => $ln,
+            ':em' => $em,
+            ':dt' => $dpt,
+            ':addr' => $addr,
+            ':st' => $state,
+            ':co' => $cou,
+            ':im' => $pic     
+        ];
+        $query->execute($values);
+        echo 'done';        
     }
     catch(PDOException $e) {             
       echo "Error: ".$e->getMessage();
@@ -630,7 +663,7 @@ elseif ($_POST['rType'] == 'del-sup') {
         $sql = "delete from supervisors where user_id=:id;
         delete from tickets where stud_id=:id;
         delete from login_details where userId=:id;
-        UPDATE students set `sup_id`=:em where `sup_id`=:id;";
+        UPDATE students set `sup_id`=:em where`sup_id`=:id;";
         $query = getConn()->prepare($sql);
         $values = [
             ':id' => $id,
@@ -669,5 +702,16 @@ function updateSec($id, $psw, $oid){
            
     echo "Error: ".$e->getMessage();
     }
+}
+
+function prepareImage($id, $nam='', $target_dir='')
+{
+    if(!file_exists($target_dir)){
+        mkdir($target_dir, 0777, true);
+    }
+    $target_file = $target_dir .'/'.$id.'_'. basename($_FILES[$nam]["name"]);    
+
+    move_uploaded_file($_FILES[$nam]["tmp_name"], $target_file);
+    return;
 }
 ?>

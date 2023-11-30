@@ -356,7 +356,7 @@ function getSupervisors_list($str=''){
 
 function getSupervisorStudent($str=''){
     try{
-        $sql = "Select matric_number from students where sup_id={$str};";
+        $sql = "Select matric_number from students where sup_id='{$str}';";
         $query = getConn()->prepare($sql);
         $query->execute();
         $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -434,7 +434,7 @@ function getSelected($str, $op=1){
 function getStudentProj($id, $boo){
 
     try{
-        $sql = "Select * from projects where stud_id={$id} LIMIT 1;";
+        $sql = "Select * from projects where stud_id='{$id}' LIMIT 1;";
         $query = getConn()->prepare($sql);
         $query->execute();
         $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -536,7 +536,6 @@ function totalStudent(){
     try{
         $sql = "Select count(*) as num from students";
         $stmt = getConn()->prepare($sql);
-        $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $val = array();
@@ -553,7 +552,6 @@ function totalProject($isReturn=false){
     try{
         $sql = "Select count(*) as num from projects";
         $stmt = getConn()->prepare($sql);
-        $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $val = array();
@@ -576,7 +574,6 @@ function totalProj($isAssign=true){
         try{
         $sql = "Select count(*) as num from projects where stud_id<>'';";
         $stmt = getConn()->prepare($sql);
-        $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $val = array();
@@ -603,7 +600,6 @@ function studWithProj(){
             try{
             $sql = "Select count(*) as num from projects where stud_id<>'';";
             $stmt = getConn()->prepare($sql);
-            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $val = array();
@@ -675,7 +671,6 @@ function ticketStatistic($key=-1){
         try{
         $sql = "Select count(*) as num from tickets where status={$key};";
         $stmt = getConn()->prepare($sql);
-        $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $val = array();
@@ -691,7 +686,6 @@ function ticketStatistic($key=-1){
             try{
             $sql = "Select count(*) as num from tickets where status={$key};";
             $stmt = getConn()->prepare($sql);
-            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $val = array();
@@ -708,7 +702,6 @@ function ticketStatistic($key=-1){
             try{
             $sql = "Select count(*) as num from tickets where status={$key};";
             $stmt = getConn()->prepare($sql);
-            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $val = array();
@@ -725,7 +718,6 @@ function ticketStatistic($key=-1){
         try{
             $sql = "Select count(*) as num from tickets";
             $stmt = getConn()->prepare($sql);
-            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $val = array();
@@ -743,9 +735,8 @@ function ticketStatistic($key=-1){
 function studentTicketStat($id, $key=-1){
     if ($key==0) {
         try{
-        $sql = "Select count(*) as num from tickets where status={$key} and stud_id={$id};";
+        $sql = "Select count(*) as num from tickets where status={$key} and stud_id='{$id}';";
         $stmt = getConn()->prepare($sql);
-        $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $val = array();
@@ -761,7 +752,6 @@ function studentTicketStat($id, $key=-1){
             try{
             $sql = "Select count(*) as num from tickets where status={$key} and stud_id='{$id}';";
             $stmt = getConn()->prepare($sql);
-            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $val = array();
@@ -778,7 +768,6 @@ function studentTicketStat($id, $key=-1){
             try{
             $sql = "Select count(*) as num from tickets where status={$key} and stud_id='{$id}';";
             $stmt = getConn()->prepare($sql);
-            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $val = array();
@@ -795,7 +784,6 @@ function studentTicketStat($id, $key=-1){
         try{
             $sql = "Select count(*) as num from tickets where stud_id='{$id}'";
             $stmt = getConn()->prepare($sql);
-            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $val = array();
@@ -814,7 +802,6 @@ function studentProject($id){
     try{
         $sql = "Select count(*) as num from projects where stud_id='{$id}';";
         $stmt = getConn()->prepare($sql);
-        $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $val = array();
@@ -831,7 +818,6 @@ function getSpStu($id){
     try{
         $sql = "Select count(*) as num from students where sup_id='{$id}'";
         $stmt = getConn()->prepare($sql);
-        $stmt->bindParam(':id', $id);
         $stmt->execute();
         $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $val = array();
