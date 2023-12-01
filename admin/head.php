@@ -4,6 +4,8 @@ if (!isset($_SESSION['pa-admin'])) {
     header('location: ../sign-in');
 }
 require_once '../util/data-process.php';
+$stid=$_SESSION['pa-admin'];
+$admin = getAdmin($stid, 'all');
 ?>
 <!doctype html>
 <html class="no-js " lang="en">

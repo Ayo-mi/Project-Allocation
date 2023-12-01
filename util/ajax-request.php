@@ -187,6 +187,37 @@ elseif ($_POST['rType'] == 'edit-project') {
     }
 }
 
+elseif ($_POST['rType']=='edit-admin') {
+    $id= $_POST['usid'];
+    $oid= $_POST['us-id'];
+    $psw = $_POST['opsw'];
+    $npsw = $_POST['npsw'];
+    $name = $_POST['name'];
+
+    try{
+        $sql = "Select password from login_details where userId = :user LIMIT 1";
+        $query = getConn()->prepare($sql);
+        $query->bindParam(':user', $oid);
+        //$query->bindParam(':psw', $psw);
+        $query->execute();
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+
+        foreach($query->fetchAll() as $post_val) {
+           if (password_verify($psw, $post_val['password'])) {
+              updateAdminSec($name, $id, $npsw, $oid);  
+              echo 'done';                     
+           }else {
+               echo('Incorrect old password');
+           }
+            
+        }
+        
+    }
+    catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    }
+}
+
 elseif ($_POST['rType']=='save-psw') {
     $id= $_POST['usid'];
     $oid= $_POST['us-id'];
@@ -203,7 +234,38 @@ elseif ($_POST['rType']=='save-psw') {
 
         foreach($query->fetchAll() as $post_val) {
            if (password_verify($psw, $post_val['password'])) {
-              updateSec($id, $npsw, $oid);                       
+              updateSec($id, $npsw, $oid);
+              echo 'done';
+           }else {
+               echo('Incorrect old password');
+           }
+            
+        }
+        
+    }
+    catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    }
+}
+
+elseif ($_POST['rType']=='save-sup-psw') {
+    $id= $_POST['usid'];
+    $oid= $_POST['us-id'];
+    $psw = $_POST['opsw'];
+    $npsw = $_POST['npsw'];
+
+    try{
+        $sql = "Select password from login_details where userId = :user LIMIT 1";
+        $query = getConn()->prepare($sql);
+        $query->bindParam(':user', $oid);
+        //$query->bindParam(':psw', $psw);
+        $query->execute();
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+
+        foreach($query->fetchAll() as $post_val) {
+           if (password_verify($psw, $post_val['password'])) {
+              updateSupervisorSec($id, $npsw, $oid);  
+              echo 'done';                     
            }else {
                echo('Incorrect old password');
            }
@@ -471,6 +533,57 @@ elseif ($_POST['rType']=='remove-assign') {
     }
 }
 
+elseif ($_POST['rType']=='delete-project') {
+    $id=$_POST['un-id'];
+    try{
+        $sql = "DELETE FROM projects where `proj_id`=:id LIMIT 1;";
+        $query = getConn()->prepare($sql);
+        $values = [
+            ':id' => $id,            
+        ];
+        $query->execute($values);
+        echo 'done';
+        
+    }
+    catch(PDOException $e) {             
+      echo "Error: ".$e->getMessage();
+    }
+}
+
+elseif ($_POST['rType']=='delete-cus-project') {
+    $id=$_POST['un-id'];
+    try{
+        $sql = "DELETE FROM custom_projects where `custom_id`=:id LIMIT 1;";
+        $query = getConn()->prepare($sql);
+        $values = [
+            ':id' => $id,
+        ];
+        $query->execute($values);
+        echo 'done';
+        
+    }
+    catch(PDOException $e) {             
+      echo "Error: ".$e->getMessage();
+    }
+}
+
+elseif ($_POST['rType']=='delete-ticket') {
+    $id=$_POST['un-id'];
+    try{
+        $sql = "DELETE FROM tickets where `tic_id`=:id LIMIT 1;";
+        $query = getConn()->prepare($sql);
+        $values = [
+            ':id' => $id,
+        ];
+        $query->execute($values);
+        echo 'done';
+        
+    }
+    catch(PDOException $e) {             
+      echo "Error: ".$e->getMessage();
+    }
+}
+
 elseif ($_POST['rType'] == 'get-supervisor') {
     $id = $_POST['id'];
     try{
@@ -686,13 +799,56 @@ function updateSec($id, $psw, $oid){
     $psw = password_hash($psw, PASSWORD_DEFAULT);
     try{
         $sql = "UPDATE login_details set `password`=:ps, userId=:idd where `userId`=:id;
-        UPDATE students set matric_number=:idd where `userId`=:id;";
+        UPDATE students set matric_number=:idd where `matric_number`=:id;";
         $query = getConn()->prepare($sql);
         $values = [
             ':id' => $oid,
             ':ps' => $psw,
             ':idd' => $id
            
+        ];
+        $query->execute($values);
+        echo 'done';
+        
+    }
+    catch(PDOException $e) {  
+           
+    echo "Error: ".$e->getMessage();
+    }
+}
+
+function updateSupervisorSec($id, $psw, $oid){
+    $psw = password_hash($psw, PASSWORD_DEFAULT);
+    try{
+        $sql = "UPDATE login_details set `password`=:ps, userId=:idd where `userId`=:id;
+        UPDATE supervisors set user_id=:idd where `user_id`=:id;";
+        $query = getConn()->prepare($sql);
+        $values = [
+            ':id' => $oid,
+            ':ps' => $psw,
+            ':idd' => $id
+           
+        ];
+        $query->execute($values);
+        echo 'done';
+        
+    }
+    catch(PDOException $e) {  
+           
+    echo "Error: ".$e->getMessage();
+    }
+}
+function updateAdminSec($name, $id, $psw, $oid){
+    $psw = password_hash($psw, PASSWORD_DEFAULT);
+    try{
+        $sql = "UPDATE login_details set `password`=:ps, userId=:idd where `userId`=:id;
+        UPDATE admins set userID=:idd, name=:nam where `userID`=:id;";
+        $query = getConn()->prepare($sql);
+        $values = [
+            ':id' => $oid,
+            ':ps' => $psw,
+            ':idd' => $id,
+            ':nam' => $name
         ];
         $query->execute($values);
         echo 'done';

@@ -28,6 +28,28 @@ jQuery(document).ready(function ($) {
             });
     });
 
+    //change admin details
+    $('#save-sec').submit(() => {
+        let form_data = new FormData(document.getElementById('save-sec'));
+
+        form_data.append('rType', 'edit-admin');
+        $.ajax({
+            url: '../util/ajax-request.php',
+            type: 'POST',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: (status) => {
+                if (status == 'done') {
+                    showErro('Admin details updated successfully', 'bg-green');
+                } else {
+                    showErro(status);
+                }
+            }
+        })
+    });
+
     //add student
     $(document).on('click', '.sign-up', () => {
         var mat = $('#matric').val();
@@ -235,6 +257,30 @@ jQuery(document).ready(function ($) {
             success: (status) => {
                 if (status == 'done') {
                     showErro('Student was successfully removed from this project.', 'bg-green');
+                } else {
+                    showErro('An Error Occur! Try again');
+                }
+            }
+        })
+    });
+
+
+    //Delete project
+    $(document).on('click', '#del-proj', () => {
+
+        let form_data = new FormData(document.getElementById('rem-assi'));
+
+        form_data.append('rType', 'delete-project');
+        $.ajax({
+            url: '../util/ajax-request.php',
+            type: 'POST',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: (status) => {
+                if (status == 'done') {
+                    showErro('Project Deleted Successfully.', 'bg-green');
                 } else {
                     showErro('An Error Occur! Try again');
                 }

@@ -6,6 +6,39 @@ function getConn(){
     return $db_conn;
 }
 
+function getAdmin($id, $key, $i=0){
+    if($i==0){
+    try{
+        $sql = "Select * from admins where userID = :id LIMIT 1";
+        $stmt = getConn()->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $val = array();
+        
+        foreach($stmt->fetchAll() as $val) {}
+        
+        if (count($val)!=0) {
+            switch (strtolower($key)) {
+            case 'name':
+                return $val['name'];
+                break;
+            case 'all':
+                return $val;
+                break;
+            default:
+                return '';
+                break;
+        }
+        }else { return ''; }
+        
+        }
+    catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+}
+
 function getStudent($id, $key, $i=0){
     if($i==0){
     try{

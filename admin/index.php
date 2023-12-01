@@ -15,6 +15,7 @@
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-12">                
                     <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
+                    <a href="profile-edit" class="btn btn-info btn-icon float-right"><i class="zmdi zmdi-edit"></i></a>
                 </div>
             </div>
         </div>
@@ -128,9 +129,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="body">
-                            <div id="chart-area-spline-sracked" class="c3_chart d_sales"></div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

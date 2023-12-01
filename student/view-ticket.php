@@ -16,7 +16,8 @@
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-12">                
                     <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
-                    
+                    <button class="btn btn-danger btn-icon float-right del-tic" id="del-tic" title="Delete ticket" type="button"><i class="zmdi zmdi-delete"></i></button>
+                    <form id='rem-tic' method="post"><input type="hidden" name="un-id" value="<?php echo $_GET['ID'] ?>"></form>
                 </div>
             </div>
         </div>

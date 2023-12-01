@@ -17,7 +17,8 @@ require_once 'head.php';?>
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-12">                
                     <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
-                    <?php if(!empty(getProject($_GET['UID'], 'student'))){?><a title="Remove Assigned Student" style="color: white" class="rem-ass btn btn-info btn-icon float-right"><i class="zmdi zmdi-close"></i></a><?php }?>
+                    <button class="btn btn-danger btn-icon float-right del-proj" id="del-proj" title="Delete project" type="button"><i class="zmdi zmdi-delete"></i></button>
+                    <?php if(!empty(getProject($_GET['UID'], 'student'))){?><a style="color: white" class="rem-ass btn btn-info btn-icon float-right"><i class="zmdi zmdi-close"></i></a><?php }?>
                     <form id='rem-assi' method="post"><input type="hidden" name="un-id" value="<?php echo $_GET['UID'] ?>"></form>
                 </div>
             </div>
