@@ -26,7 +26,7 @@ require_once 'head.php';?>
                             <h2><strong>Profile</strong> Data</h2>
                         </div>
                         <div class="body">
-                            <form  method="post" id="save-sec">
+                            <form  method="post" id="save-profile">
                             <div class="row">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">

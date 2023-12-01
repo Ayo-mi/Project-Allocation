@@ -29,8 +29,8 @@ jQuery(document).ready(function ($) {
     });
 
     //change admin details
-    $('#save-sec').submit(() => {
-        let form_data = new FormData(document.getElementById('save-sec'));
+    $('#save-profile').submit(() => {
+        let form_data = new FormData(document.getElementById('save-profile'));
 
         form_data.append('rType', 'edit-admin');
         $.ajax({
